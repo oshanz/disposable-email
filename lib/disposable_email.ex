@@ -88,16 +88,20 @@ defmodule DisposableEmail do
   end
 
   defp download_blocklist do
-    {:ok, path} = Briefly.create()
-    {:ok, responce} = Tesla.get(client(), @source)
+    with {:ok, path} <- Briefly.create(),
+         {:ok, io} <- File.open(path, [:write]),
+         {:ok, responce} <- Tesla.get(client(), @source) do
+      responce.body
+      |> Stream.each(fn chunk ->
+        IO.write(io, chunk)
+      end)
+      |> Stream.run()
 
-    responce.body
-    |> Stream.each(fn chunk ->
-      File.write(path, chunk)
-    end)
-    |> Stream.run()
-
-    {:ok, path}
+      File.close(io)
+      {:ok, path}
+    else
+      {:error, reason} -> {:error, reason}
+    end
   end
 
   defp client do
