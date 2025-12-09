@@ -9,4 +9,10 @@ defmodule DisposableEmailTest do
   test "gmail.com is allowed" do
     assert DisposableEmail.is_disposable?("dfs@gmail.com") == 0
   end
+
+  test "download blocklist" do
+    DisposableEmail.reload()
+
+    assert DisposableEmail.blocklist_size() > 1000
+  end
 end

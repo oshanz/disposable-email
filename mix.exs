@@ -24,7 +24,8 @@ defmodule DisposableEmail.MixProject do
     [
       {:briefly, "~> 0.5.1"},
       {:tesla, "~> 1.11"},
-      {:mint, "~> 1.0"}
+      {:mint, "~> 1.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 end
