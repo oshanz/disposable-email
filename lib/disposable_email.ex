@@ -41,8 +41,8 @@ defmodule DisposableEmail do
   @impl true
   def handle_call({:check, email}, _from, state) do
     suffix = email |> String.split("@") |> List.last()
-    count = :ets.lookup(__MODULE__, suffix) |> length()
-    {:reply, count, state}
+    exists = :ets.lookup(__MODULE__, suffix) |> length() > 0
+    {:reply, exists, state}
   end
 
   @impl true

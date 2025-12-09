@@ -3,11 +3,11 @@ defmodule DisposableEmailTest do
   doctest DisposableEmail
 
   test "zed.eu is blocked" do
-    assert DisposableEmail.is_disposable?("dfs@z0d.eu") == 1
+    assert DisposableEmail.is_disposable?("dfs@z0d.eu") == true
   end
 
   test "gmail.com is allowed" do
-    assert DisposableEmail.is_disposable?("dfs@gmail.com") == 0
+    assert DisposableEmail.is_disposable?("dfs@gmail.com") == false
   end
 
   test "download blocklist" do
