@@ -1,6 +1,17 @@
 # DisposableEmail
 
-**TODO: Add description**
+
+## Features
+
+* Supports scheduled downloads of the blocklist from [github.com/disposable-email-domains](https://github.com/disposable-email-domains/disposable-email-domains)
+
+```elixir
+## https://hexdocs.pm/quantum/Quantum.html
+config :my_app, MyApp.Scheduler,
+  jobs: [
+    {"@daily", {DisposableEmail, :reload, []}},
+  ]
+```
 
 ## Installation
 
@@ -18,4 +29,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/disposable_email>.
-

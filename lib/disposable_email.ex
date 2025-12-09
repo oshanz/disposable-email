@@ -11,18 +11,19 @@ defmodule DisposableEmail do
     GenServer.call(__MODULE__, {:check, email})
   end
 
+  def reload do
+    GenServer.cast(__MODULE__, {:reload})
+  end
+
+  def blocklist_size do
+    GenServer.call(__MODULE__, {:store_size})
+  end
+
   @impl true
   def init(_init_arg) do
     delete_table()
     :ets.new(__MODULE__, [:named_table, :private, :bag])
     {:ok, nil, {:continue, :init}}
-  end
-
-  defp delete_table do
-    case :ets.whereis(__MODULE__) do
-      :undefined -> :already_deleted
-      _ -> :ets.delete(__MODULE__)
-    end
   end
 
   @impl true
@@ -32,22 +33,20 @@ defmodule DisposableEmail do
   end
 
   @impl true
+  def terminate(_reason, _state) do
+    delete_table()
+    Briefly.cleanup()
+  end
+
+  @impl true
   def handle_call({:check, email}, _from, state) do
     suffix = email |> String.split("@") |> List.last()
     count = :ets.lookup(__MODULE__, suffix) |> length()
     {:reply, count, state}
   end
 
-  def reload do
-    GenServer.cast(__MODULE__, {:reload})
-  end
-
-  def blocklist_size do
-    GenServer.call(__MODULE__, {:list_size})
-  end
-
   @impl true
-  def handle_call({:list_size}, _from, state) do
+  def handle_call({:store_size}, _from, state) do
     size = :ets.info(__MODULE__, :size)
     {:reply, size, state}
   end
@@ -69,9 +68,15 @@ defmodule DisposableEmail do
     |> Stream.run()
   end
 
+  defp delete_table do
+    case :ets.whereis(__MODULE__) do
+      :undefined -> :already_deleted
+      _ -> :ets.delete(__MODULE__)
+    end
+  end
+
   defp download_blocklist do
     {:ok, path} = Briefly.create()
-
     {:ok, responce} = Tesla.get(client(), @source)
 
     responce.body
@@ -90,11 +95,5 @@ defmodule DisposableEmail do
       ],
       {Tesla.Adapter.Mint, body_as: :stream}
     )
-  end
-
-  @impl true
-  def terminate(_reason, _state) do
-    delete_table()
-    Briefly.cleanup()
   end
 end
