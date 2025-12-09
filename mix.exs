@@ -8,10 +8,10 @@ defmodule DisposableEmail.MixProject do
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      package: package(),
       description:
         "Detect disposable and temporary email addresses by checking domains against a regularly updated list from the disposable-email-domains repository.",
-      source_url: "https://github.com/oshanz/disposable-email",
-      licenses: "GNU GPLv3"
+      source_url: "https://github.com/oshanz/disposable-email"
     ]
   end
 
@@ -29,7 +29,15 @@ defmodule DisposableEmail.MixProject do
       {:briefly, "~> 0.5.1"},
       {:tesla, "~> 1.11"},
       {:mint, "~> 1.0"},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+    ]
+  end
+
+  defp package do
+    [
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => "https://github.com/oshanz/disposable-email"}
     ]
   end
 end
