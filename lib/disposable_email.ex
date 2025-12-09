@@ -40,8 +40,20 @@ defmodule DisposableEmail do
 
   @impl true
   def handle_call({:check, email}, _from, state) do
-    suffix = email |> String.split("@") |> List.last()
-    exists = :ets.lookup(__MODULE__, suffix) |> length() > 0
+    parts = email |> String.split("@") |> List.last() |> String.split(".")
+
+    domain_parts =
+      0..((parts |> length()) - 2)
+      |> Enum.map(fn n ->
+        Enum.slice(parts, n..-1//1) |> Enum.join(".")
+      end)
+
+    exists =
+      domain_parts
+      |> Enum.any?(fn part ->
+        :ets.lookup(__MODULE__, part) |> length() > 0
+      end)
+
     {:reply, exists, state}
   end
 
