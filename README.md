@@ -46,9 +46,9 @@ end
 
 ```elixir
 # Check if an email is from a disposable domain
-DisposableEmail.is_disposable?("user@tempmail.com")
+DisposableEmail.disposable?("user@tempmail.com")
 # => true
 
-DisposableEmail.is_disposable?("user@gmail.com")
+DisposableEmail.disposable?("user@gmail.com")
 # => false
 ```

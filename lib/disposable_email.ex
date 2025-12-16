@@ -5,7 +5,6 @@ defmodule DisposableEmail do
 
   @source "https://github.com/disposable-email-domains/disposable-email-domains/raw/refs/heads/main/disposable_email_blocklist.conf"
 
-  @spec start_link(any()) :: :ignore | {:error, any()} | {:ok, pid()}
   def start_link(_init_arg) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
@@ -32,7 +31,6 @@ defmodule DisposableEmail do
   end
 
   @impl true
-  @spec init(any()) :: {:ok, nil, {:continue, :init}}
   def init(_init_arg) do
     delete_table()
     :ets.new(__MODULE__, [:named_table, :private, :set])
