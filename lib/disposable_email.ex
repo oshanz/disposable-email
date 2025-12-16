@@ -12,6 +12,7 @@ defmodule DisposableEmail do
 
   @deprecated "Use disposable?/1 instead"
   @spec is_disposable?(String.t()) :: boolean()
+  # credo:disable-for-next-line
   def is_disposable?(email) do
     GenServer.call(__MODULE__, {:check, email})
   end
