@@ -25,20 +25,8 @@ Add `disposable_email` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:disposable_email, "~> 0.3.0"}
+    {:disposable_email, "~> 0.4.0"}
   ]
-end
-```
-
-The `DisposableEmail` GenServer needs to be added to your application's supervision tree.
-
-```elixir
-def start(_type, _args) do
-  children = [
-    DisposableEmail
-  ]
-  opts = [strategy: :one_for_one, name: MyApp.Supervisor]
-  Supervisor.start_link(children, opts)
 end
 ```
 

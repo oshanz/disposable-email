@@ -41,7 +41,8 @@ defmodule DisposableEmail do
 
   @impl true
   def handle_continue(:init, state) do
-    refill_store("disposable_email_blocklist.conf")
+    path = Application.app_dir(:disposable_email, "priv/disposable_email_blocklist.conf")
+    refill_store(path)
     Logger.info("DisposableEmail initialized with #{store_size()} domains.")
     {:noreply, state}
   end
