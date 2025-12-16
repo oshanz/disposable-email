@@ -1,28 +1,41 @@
 defmodule DisposableEmail do
+  @moduledoc "Disposable Email Verification Service"
+
   use GenServer
 
   @source "https://github.com/disposable-email-domains/disposable-email-domains/raw/refs/heads/main/disposable_email_blocklist.conf"
 
+  @spec start_link(any()) :: :ignore | {:error, any()} | {:ok, pid()}
   def start_link(_init_arg) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
+  @deprecated "Use disposable?/1 instead"
+  @spec is_disposable?(String.t()) :: boolean()
   def is_disposable?(email) do
     GenServer.call(__MODULE__, {:check, email})
   end
 
+  @spec disposable?(any()) :: any()
+  def disposable?(email) do
+    GenServer.call(__MODULE__, {:check, email})
+  end
+
+  @spec reload() :: :ok
   def reload do
     GenServer.cast(__MODULE__, {:reload})
   end
 
+  @spec blocklist_size() :: non_neg_integer()
   def blocklist_size do
     GenServer.call(__MODULE__, {:store_size})
   end
 
   @impl true
+  @spec init(any()) :: {:ok, nil, {:continue, :init}}
   def init(_init_arg) do
     delete_table()
-    :ets.new(__MODULE__, [:named_table, :private, :bag])
+    :ets.new(__MODULE__, [:named_table, :private, :set])
     {:ok, nil, {:continue, :init}}
   end
 
@@ -90,8 +103,8 @@ defmodule DisposableEmail do
   defp download_blocklist do
     with {:ok, path} <- Briefly.create(),
          {:ok, io} <- File.open(path, [:write]),
-         {:ok, responce} <- Tesla.get(client(), @source) do
-      responce.body
+         {:ok, response} <- Tesla.get(client(), @source) do
+      response.body
       |> Stream.each(fn chunk ->
         IO.write(io, chunk)
       end)
