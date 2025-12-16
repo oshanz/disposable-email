@@ -1,3 +1,3 @@
 import Config
 
-# config(:tesla, adapter: Tesla.Adapter.Mint)
+config(:logger, level: :debug)

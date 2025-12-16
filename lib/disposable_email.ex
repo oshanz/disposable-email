@@ -1,9 +1,10 @@
 defmodule DisposableEmail do
   @moduledoc "Disposable Email Verification Service"
+  require Logger
 
   use GenServer
 
-  @source "https://github.com/disposable-email-domains/disposable-email-domains/raw/refs/heads/main/disposable_email_blocklist.conf"
+  @source "https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/refs/heads/main/disposable_email_blocklist.conf"
 
   def start_link(_init_arg) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -40,6 +41,7 @@ defmodule DisposableEmail do
   @impl true
   def handle_continue(:init, state) do
     refill_store("disposable_email_blocklist.conf")
+    Logger.info("DisposableEmail initialized with #{store_size()} domains.")
     {:noreply, state}
   end
 
@@ -70,15 +72,21 @@ defmodule DisposableEmail do
 
   @impl true
   def handle_call({:store_size}, _from, state) do
-    size = :ets.info(__MODULE__, :size)
-    {:reply, size, state}
+    {:reply, store_size(), state}
+  end
+
+  defp store_size do
+    :ets.info(__MODULE__, :size)
   end
 
   @impl true
   def handle_cast({:reload}, state) do
-    {:ok, path} = download_blocklist()
-    refill_store(path)
+    case download_blocklist() do
+      {:ok, path} -> refill_store(path)
+      {:error, reason} -> Logger.error(reason)
+    end
 
+    Logger.info("DisposableEmail reloaded with #{store_size()} domains.")
     {:noreply, state}
   end
 
