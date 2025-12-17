@@ -1,5 +1,7 @@
 defmodule DisposableEmail do
-  @moduledoc "Disposable Email Verification Service"
+  @moduledoc """
+  Disposable Email Verification Service
+  """
   require Logger
 
   use GenServer
@@ -17,16 +19,32 @@ defmodule DisposableEmail do
     GenServer.call(__MODULE__, {:check, email})
   end
 
-  @spec disposable?(any()) :: any()
+  @doc """
+  Check if an email is from a disposable domain
+  ```elixir
+  DisposableEmail.disposable?("user@tempmail.com")
+  => true
+
+  DisposableEmail.disposable?("user@gmail.com")
+  => false
+  ```
+  """
+  @spec disposable?(String.t()) :: boolean()
   def disposable?(email) do
     GenServer.call(__MODULE__, {:check, email})
   end
 
+  @doc """
+  Reseed the blocklist from the remote repository.
+  """
   @spec reload() :: :ok
   def reload do
     GenServer.cast(__MODULE__, {:reload})
   end
 
+  @doc """
+  Return the blocklist count.
+  """
   @spec blocklist_size() :: non_neg_integer()
   def blocklist_size do
     GenServer.call(__MODULE__, {:store_size})
