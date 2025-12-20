@@ -53,6 +53,7 @@ defmodule DisposableEmail do
   @impl true
   def init(_init_arg) do
     delete_table()
+    schedule_reload()
     :ets.new(__MODULE__, [:named_table, :private, :set])
     {:ok, nil, {:continue, :init}}
   end
@@ -107,6 +108,7 @@ defmodule DisposableEmail do
     end
 
     Logger.info("DisposableEmail reloaded with #{store_size()} domains.")
+    schedule_reload()
     {:noreply, state}
   end
 
@@ -150,5 +152,25 @@ defmodule DisposableEmail do
       ],
       {Tesla.Adapter.Mint, body_as: :stream}
     )
+  end
+
+  defp schedule_reload do
+    Application.get_env(:disposable_email, :reload_in_days, 7) |> schedule_reload()
+  end
+
+  defp schedule_reload(in_days) when is_integer(in_days) and in_days > 0 do
+    time = :timer.hours(24 * in_days)
+    Process.send_after(self(), :reload, time)
+    Logger.debug("DisposableEmail is scheduled to reload in #{in_days} days")
+  end
+
+  defp schedule_reload(_) do
+    Logger.debug("DisposableEmail scheduled reload disabled")
+  end
+
+  @impl true
+  def handle_info(:reload, state) do
+    GenServer.cast(__MODULE__, {:reload})
+    {:noreply, state}
   end
 end
