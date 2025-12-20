@@ -154,7 +154,7 @@ defmodule DisposableEmail do
     )
   end
 
-  defp schedule_reload() do
+  defp schedule_reload do
     Application.get_env(:disposable_email, :reload_in_days, 7) |> schedule_reload()
   end
 
