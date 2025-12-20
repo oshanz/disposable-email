@@ -159,7 +159,7 @@ defmodule DisposableEmail do
   end
 
   defp schedule_reload(in_days) when is_integer(in_days) and in_days > 0 do
-    time = :timer.seconds(24 * in_days)
+    time = :timer.hours(24 * in_days)
     Process.send_after(self(), :reload, time)
     Logger.debug("DisposableEmail is scheduled to reload in #{in_days} days")
   end
