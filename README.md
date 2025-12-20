@@ -10,14 +10,6 @@ This library periodically downloads and caches a list of known disposable email 
 - [x] Fast in-memory lookup using ETS tables
 - [x] Supports scheduled downloads of the latest blocklist from [github.com/disposable-email-domains](https://github.com/disposable-email-domains/disposable-email-domains)
 
-```elixir
-## https://hexdocs.pm/quantum/Quantum.html
-config :my_app, MyApp.Scheduler,
-  jobs: [
-    {"@daily", {DisposableEmail, :reload, []}},
-  ]
-```
-
 ## Installation
 
 Add `disposable_email` to your list of dependencies in `mix.exs`:
@@ -39,4 +31,12 @@ DisposableEmail.disposable?("user@tempmail.com")
 
 DisposableEmail.disposable?("user@gmail.com")
 # => false
+```
+
+## Scheduled Reloads
+
+```elixir
+# Positive integer (≥ 1): Reloads every N days after startup.
+# 0 or any non-integer (e.g., false, nil): Disables scheduled reloads.
+config :disposable_email, reload_in_days: 7
 ```
