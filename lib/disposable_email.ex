@@ -12,13 +12,6 @@ defmodule DisposableEmail do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
-  @deprecated "Use disposable?/1 instead"
-  @spec is_disposable?(String.t()) :: boolean()
-  # credo:disable-for-next-line
-  def is_disposable?(email) do
-    GenServer.call(__MODULE__, {:check, email})
-  end
-
   @doc """
   Check if an email is from a disposable domain
   ```elixir
