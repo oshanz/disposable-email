@@ -25,7 +25,7 @@ Add `disposable_email` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:disposable_email, "~> 0.4.1"}
+    {:disposable_email, "~> 0.5.0"}
   ]
 end
 ```
