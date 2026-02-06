@@ -1,6 +1,6 @@
 # DisposableEmail
 
-### Prevent fake signups and spam: Elixir library for detecting disposable and temporary emails, using an up-to-date blocklist of over 5,000 domains.
+ Prevent fake signups and spam: Elixir library for detecting disposable and temporary emails, using an up-to-date blocklist of over 5,000 domains.
 
 ## Features
 
