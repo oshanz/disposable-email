@@ -1,8 +1,6 @@
 # DisposableEmail
 
-A GenServer-based Elixir library for detecting disposable email addresses using the disposable-email-domains blocklist.
-
-This library periodically downloads and caches a list of known disposable email domains, allowing you to quickly check if an email address is from a temporary email service.
+### Prevent fake signups and spam: Elixir library for detecting disposable and temporary emails, using an up-to-date blocklist of over 5,000 domains.
 
 ## Features
 
@@ -17,6 +15,7 @@ config :my_app, MyApp.Scheduler,
     {"@daily", {DisposableEmail, :reload, []}},
   ]
 ```
+If blocklist download fails, an error is logged, but the app continues running using the most recent available blocklist (bundled at startup or last successful download).
 
 ## Installation
 
