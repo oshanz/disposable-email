@@ -11,7 +11,14 @@ defmodule DisposableEmail.MixProject do
       package: package(),
       description:
         "Detect disposable and temporary email addresses by checking domains against a regularly updated list from the disposable-email-domains repository.",
-      source_url: "https://github.com/oshanz/disposable-email"
+      source_url: "https://github.com/oshanz/disposable-email",
+      aliases: aliases()
+    ]
+  end
+
+  def cli do
+    [
+      preferred_envs: [precommit: :test]
     ]
   end
 
@@ -38,6 +45,12 @@ defmodule DisposableEmail.MixProject do
     [
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/oshanz/disposable-email"}
+    ]
+  end
+
+  defp aliases do
+    [
+      precommit: ["format --check-formatted", "credo --strict", "test"]
     ]
   end
 end
