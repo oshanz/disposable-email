@@ -50,7 +50,12 @@ defmodule DisposableEmail.MixProject do
 
   defp aliases do
     [
-      precommit: ["format --check-formatted", "credo --strict", "test"]
+      precommit: [
+        "format",
+        "credo --strict",
+        "test",
+        "compile --warnings-as-errors"
+      ]
     ]
   end
 end
