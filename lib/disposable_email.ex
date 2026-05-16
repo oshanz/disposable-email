@@ -27,6 +27,23 @@ defmodule DisposableEmail do
     GenServer.call(__MODULE__, {:check, email})
   end
 
+  @email_regex ~r/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  @doc """
+  Check if an email has a valid format.
+  ```elixir
+  DisposableEmail.valid_format?("user@example.com")
+  => true
+
+  DisposableEmail.valid_format?("notanemail")
+  => false
+  ```
+  """
+  @spec valid_format?(String.t()) :: boolean()
+  def valid_format?(email) do
+    String.match?(email, @email_regex)
+  end
+
   @doc """
   Reseed the blocklist from the remote repository.
   """
