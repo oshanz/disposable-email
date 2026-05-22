@@ -69,7 +69,7 @@ defmodule DisposableEmail do
     parts = email |> String.split("@") |> List.last() |> String.split(".")
 
     domain_parts =
-      0..((parts |> length()) - 2)
+      0..((parts |> length()) - 2)//1
       |> Enum.map(fn n ->
         Enum.slice(parts, n..-1//1) |> Enum.join(".")
       end)

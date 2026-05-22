@@ -21,4 +21,10 @@ defmodule DisposableEmailTest do
 
     assert DisposableEmail.blocklist_size() > 1000
   end
+
+  test "invalid email types are blocked" do
+    assert false == DisposableEmail.disposable?("testmailyopmail.com")
+    assert false == DisposableEmail.disposable?("testmail@yopmail")
+    assert false == DisposableEmail.disposable?("testmailyopmail")
+  end
 end
