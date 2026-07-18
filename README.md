@@ -39,3 +39,7 @@ DisposableEmail.disposable?("user@tempmail.com")
 DisposableEmail.disposable?("user@gmail.com")
 # => false
 ```
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md)
