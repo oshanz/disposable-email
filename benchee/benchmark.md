@@ -1,6 +1,6 @@
 Benchmark
 
-Benchmark run from 2026-07-02 08:17:38.659773Z UTC
+Benchmark run from 2026-07-18 11:45:57.629657Z UTC
 
 ## System
 
@@ -63,29 +63,29 @@ Run Time
 
   <tr>
     <td style="white-space: nowrap">valid domain</td>
-    <td style="white-space: nowrap; text-align: right">305.17 K</td>
-    <td style="white-space: nowrap; text-align: right">3.28 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;429.28%</td>
-    <td style="white-space: nowrap; text-align: right">3.12 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">4.74 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">303.68 K</td>
+    <td style="white-space: nowrap; text-align: right">3.29 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;611.04%</td>
+    <td style="white-space: nowrap; text-align: right">3.09 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">4.67 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">disposable domain</td>
-    <td style="white-space: nowrap; text-align: right">304.32 K</td>
-    <td style="white-space: nowrap; text-align: right">3.29 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;239.15%</td>
-    <td style="white-space: nowrap; text-align: right">3.09 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">4.84 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">302.21 K</td>
+    <td style="white-space: nowrap; text-align: right">3.31 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;653.77%</td>
+    <td style="white-space: nowrap; text-align: right">3.06 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">4.92 &micro;s</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">nested domain</td>
-    <td style="white-space: nowrap; text-align: right">256.84 K</td>
-    <td style="white-space: nowrap; text-align: right">3.89 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">&plusmn;291.71%</td>
-    <td style="white-space: nowrap; text-align: right">3.80 &micro;s</td>
-    <td style="white-space: nowrap; text-align: right">5.65 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">262.31 K</td>
+    <td style="white-space: nowrap; text-align: right">3.81 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">&plusmn;341.61%</td>
+    <td style="white-space: nowrap; text-align: right">3.69 &micro;s</td>
+    <td style="white-space: nowrap; text-align: right">5.45 &micro;s</td>
   </tr>
 
 </table>
@@ -100,20 +100,20 @@ Run Time Comparison
     <th style="text-align: right">Slower</th>
   <tr>
     <td style="white-space: nowrap">valid domain</td>
-    <td style="white-space: nowrap;text-align: right">305.17 K</td>
+    <td style="white-space: nowrap;text-align: right">303.68 K</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">disposable domain</td>
-    <td style="white-space: nowrap; text-align: right">304.32 K</td>
+    <td style="white-space: nowrap; text-align: right">302.21 K</td>
     <td style="white-space: nowrap; text-align: right">1.0x</td>
   </tr>
 
   <tr>
     <td style="white-space: nowrap">nested domain</td>
-    <td style="white-space: nowrap; text-align: right">256.84 K</td>
-    <td style="white-space: nowrap; text-align: right">1.19x</td>
+    <td style="white-space: nowrap; text-align: right">262.31 K</td>
+    <td style="white-space: nowrap; text-align: right">1.16x</td>
   </tr>
 
 </table>

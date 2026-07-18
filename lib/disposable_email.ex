@@ -77,7 +77,7 @@ defmodule DisposableEmail do
     exists =
       domain_parts
       |> Enum.any?(fn part ->
-        :ets.lookup(__MODULE__, part) |> length() > 0
+        :ets.member(__MODULE__, part)
       end)
 
     {:reply, exists, state}
