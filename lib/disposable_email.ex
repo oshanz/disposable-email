@@ -96,7 +96,7 @@ defmodule DisposableEmail do
   def handle_cast({:reload}, state) do
     case download_blocklist() do
       {:ok, path} -> refill_store(path)
-      {:error, reason} -> Logger.error(reason)
+      {:error, reason} -> Logger.error(inspect(reason))
     end
 
     Logger.info("DisposableEmail reloaded with #{store_size()} domains.")
@@ -122,7 +122,7 @@ defmodule DisposableEmail do
   defp download_blocklist do
     with {:ok, path} <- Briefly.create(),
          {:ok, io} <- File.open(path, [:write]),
-         {:ok, response} <- Tesla.get(client(), @source) do
+         {:ok, %Tesla.Env{status: 200} = response} <- Tesla.get(client(), @source) do
       response.body
       |> Stream.each(fn chunk ->
         IO.write(io, chunk)
@@ -132,16 +132,24 @@ defmodule DisposableEmail do
       File.close(io)
       {:ok, path}
     else
+      {:ok, %Tesla.Env{status: status}} -> {:error, {:http_error, status}}
       {:error, reason} -> {:error, reason}
     end
   end
 
   defp client do
+    adapter =
+      Application.get_env(
+        :disposable_email,
+        :tesla_adapter,
+        {Tesla.Adapter.Mint, body_as: :stream}
+      )
+
     Tesla.client(
       [
         {Tesla.Middleware.FollowRedirects, max_redirects: 2}
       ],
-      {Tesla.Adapter.Mint, body_as: :stream}
+      adapter
     )
   end
 end
