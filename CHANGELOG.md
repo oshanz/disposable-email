@@ -1,5 +1,25 @@
 # Changelog
 
+## [v0.5.7] - 2026-08-31
+
+### Fixed
+- download_blocklist/0 doesn't check HTTP status #30
+- non-200 responses silently corrupt the blocklist #30
+
+## [v0.5.6] - 2026-08-17
+
+### Changed
+- Update disposable email blocklist.
+- Replace ETS lookup with `member?`.
+
+## [v0.5.5] - 2026-06-21
+
+### Changed
+- Update disposable email blocklist.
+
+### Fixed
+- Warnings on invalid domains.
+
 ## [v0.5.4] - 2026-05-22
 
 ### Changed
