@@ -29,6 +29,14 @@ def deps do
 end
 ```
 
+## HTTP client
+
+By default, blocklist downloads use Erlang's built-in `:httpc` adapter, so no extra HTTP client dependency is required. To use a different [Tesla adapter](https://hexdocs.pm/tesla/readme.html#adapters) (e.g. Mint, Hackney, Finch), add its dependency to your app and configure it:
+
+```elixir
+config :disposable_email, :tesla_adapter, {Tesla.Adapter.Mint, body_as: :stream}
+```
+
 ## Usage
 
 ```elixir

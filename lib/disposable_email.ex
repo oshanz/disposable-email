@@ -123,12 +123,7 @@ defmodule DisposableEmail do
     with {:ok, path} <- Briefly.create(),
          {:ok, io} <- File.open(path, [:write]),
          {:ok, %Tesla.Env{status: 200} = response} <- Tesla.get(client(), @source) do
-      response.body
-      |> Stream.each(fn chunk ->
-        IO.write(io, chunk)
-      end)
-      |> Stream.run()
-
+      write_body(io, response.body)
       File.close(io)
       {:ok, path}
     else
@@ -137,13 +132,16 @@ defmodule DisposableEmail do
     end
   end
 
+  defp write_body(io, body) when is_binary(body), do: IO.write(io, body)
+
+  defp write_body(io, body) do
+    body
+    |> Stream.each(&IO.write(io, &1))
+    |> Stream.run()
+  end
+
   defp client do
-    adapter =
-      Application.get_env(
-        :disposable_email,
-        :tesla_adapter,
-        {Tesla.Adapter.Mint, body_as: :stream}
-      )
+    adapter = Application.get_env(:disposable_email, :tesla_adapter, Tesla.Adapter.Httpc)
 
     Tesla.client(
       [
