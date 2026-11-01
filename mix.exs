@@ -10,7 +10,7 @@ defmodule DisposableEmail.MixProject do
       deps: deps(),
       package: package(),
       description:
-        "Detect disposable and temporary email addresses by checking domains against a regularly updated list from the disposable-email-domains repository.",
+        "Detect disposable and temporary emails with a regularly updated 10,000+ domain blocklist.",
       source_url: "https://github.com/oshanz/disposable-email",
       aliases: aliases()
     ]
