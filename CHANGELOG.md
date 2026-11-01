@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.0] - 2026-11-01
+
+### Changed
+- Bump version to 1.0.0 to celebrate a few milestones.
+
+### Celebration
+- The upstream blocklist has passed 10,000 domains. Thanks to the upstream team for maintaining it.
+- The package has passed 10,000 all-time downloads on Hex. Thank you to everyone using it.
+- Welcome to our first contributor, [@anhern](https://github.com/anhern). Thank you!
+
 ## [v0.5.7] - 2026-08-31
 
 ### Fixed
