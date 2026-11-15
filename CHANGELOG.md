@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.0.1] - 2026-11-15
+
+### Changed
+- Update disposable email blocklist.
+
 ## [v1.0.0] - 2026-11-01
 
 ### Changed
